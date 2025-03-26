@@ -1,6 +1,0 @@
-framework module DialerTO {
-  umbrella header "DialerTO.h"
-  export *
-
-  module * { export * }
-}

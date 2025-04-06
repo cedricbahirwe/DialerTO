@@ -1,8 +1,10 @@
 //
 //  DialerOptimizer.swift
-//  DialerTO
 //
-//  Created by Cédric Bahirwe on 26/03/2025.
+//  Copyright (c) 2025 Cédric Bahirwe
+//
+//  This software is licensed under the MIT License.
+//  See the LICENSE file in the project root for more information.
 //
 
 import Foundation

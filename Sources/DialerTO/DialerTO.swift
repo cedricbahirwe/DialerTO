@@ -1,5 +1,5 @@
 //
-//  DialertOptimizer.swift
+//  DialerOptimizer.swift
 //  DialerTO
 //
 //  Created by Cédric Bahirwe on 26/03/2025.
@@ -57,25 +57,34 @@ public struct TransactionOptimizer {
 
         // Predefined optimal split points based on fee brackets
         let optimalSplitPoints = [
-            1_000,
-            10_000,   // Lowest fee threshold
-            150_000,  // Next significant fee change
-            2_000_000, // Major fee bracket
-            5_000_000,  // Highest fee bracket before max
-            10_000_000
+            1...1_000,
+            1_001...10_000,   // Lowest fee threshold
+            10_001...150_000,  // Next significant fee change
+            1_50_001...2_000_000, // Major fee bracket
+            2_000_001...5_000_000,  // Highest fee bracket before max
+            5_000_001...10_000_000
         ]
 
+        var isFirstSplit = true
         var result = [Int]()
         var remainingAmount = totalAmount
 
         // Start with the largest possible split that doesn't exceed remaining amount
         while remainingAmount > 0 {
             // Find the largest split point that doesn't exceed remaining amount
-            let splitAmount = optimalSplitPoints
-                .filter { $0 <= remainingAmount }
-                .max() ?? remainingAmount
+            let splitAmount: Int
+            if isFirstSplit {
+                isFirstSplit = false
+                splitAmount = optimalSplitPoints
+                    .map(\.upperBound)
+                    .filter { $0 <= remainingAmount }
+                    .max() ?? remainingAmount
+            } else {
+                splitAmount = optimalSplitPoints
+                    .filter({ remainingAmount >= $0.lowerBound })
+                    .last?.upperBound ?? remainingAmount
+            }
 
-            print("Going here", splitAmount, remainingAmount)
             // Ensure we don't create tiny transactions
             let finalSplitAmount = min(splitAmount, remainingAmount)
 

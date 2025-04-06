@@ -115,7 +115,7 @@ struct TransactionOptimizerTests {
 
     // MARK: - Tests for calculateFeesSavings
 
-//    @Test("Calculates correct fee savings")
+    @Test("Calculates correct fee savings")
     func testCalculateFeeSavings() {
         // Simple case where splitting doesn't save
         let smallCase = TransactionOptimizer.calculateFeesSavings(for: 500)
@@ -133,8 +133,7 @@ struct TransactionOptimizerTests {
         }
 
         // Large case with significant savings
-        if let largeCase = TransactionOptimizer.calculateFeesSavings(for: 6_000_000) {
-            print(largeCase)
+        if let largeCase = TransactionOptimizer.calculateFeesSavings(for: 7_000_000) {
             #expect(largeCase.savings > 0)
             #expect(largeCase.originalFee == 5_000)
         } else {
@@ -172,8 +171,8 @@ struct TransactionOptimizerTests {
         // 4. Calculate savings
         let savings = TransactionOptimizer.calculateFeesSavings(for: amount)
         #expect(savings != nil)
-        #expect(savings?.originalFee == singleFee)
-        #expect(savings?.optimizedFee == optimizedFee)
-        #expect(savings?.savings == singleFee! - optimizedFee!)
+        #expect(savings!.originalFee == singleFee)
+        #expect(savings!.optimizedFee == optimizedFee)
+        #expect(savings!.savings == singleFee! - optimizedFee!)
     }
 }

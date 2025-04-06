@@ -1,1 +1,2 @@
-A Swift Package wrapper for Dialer Transaction Optimiser Binary
+An optimisation algorithm for Dialer App Transactions
+
